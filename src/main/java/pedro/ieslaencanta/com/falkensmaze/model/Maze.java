@@ -159,19 +159,15 @@ public class Maze implements Serializable {
             default:
                 break;
         }
-        //obtener la extension de file
-        //swthic para llamar en función extension a saveXML, saveJSON y saveBin
-        // Maze.saveJSON(maze, file);
-        // Maze.saveXML(maze, file);
-        //Maze.saveBin(maze, file);
+      
     }
-
+    //cargar en Json
     private static Maze loadJSON(File file) throws FileNotFoundException {
         Gson gson = new Gson();
         Maze m = gson.fromJson(new FileReader(file), Maze.class);
         return m;
     }
-
+    //cargar en XML
     private static Maze loadXML(File file) throws JAXBException {
         JAXBContext jaxbContext;
         jaxbContext = JAXBContext.newInstance(Maze.class);
@@ -179,14 +175,14 @@ public class Maze implements Serializable {
         Maze m = (Maze) jaxbUnmarshaller.unmarshal(file);
         return m;
     }
-    
+    //cargar en binario
     public static Maze loadBin(File file) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream entrada = new ObjectInputStream(fis);
         Maze maze = (Maze) entrada.readObject();
         return maze;
     }
-
+    //Guardar en JSON
     private static void saveJSON(Maze maze, File file) throws IOException {
         Gson gson = new Gson();
         String json = gson.toJson(maze);
@@ -194,7 +190,7 @@ public class Maze implements Serializable {
         p.print(json);
         p.close();
     }
-
+    //Guardar en XML
     private static void saveXML(Maze maze, File file) throws FileNotFoundException, JAXBException {
         JAXBContext contexto = JAXBContext.newInstance(maze.getClass());
         Marshaller marshaller = contexto.createMarshaller();
@@ -202,6 +198,7 @@ public class Maze implements Serializable {
         marshaller.marshal(maze,file);
     }
 
+    //Guardar en binario
     public static void saveBin(Maze maze, File file) throws IOException {
         FileOutputStream fos = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
